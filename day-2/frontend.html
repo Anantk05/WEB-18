@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="mycss.css">
+    <link rel="stylesheet" href="cssfront.css">
+</head>
+<body>
+    <div id="nav">
+        <h1><a href="frontend.html">Frontend</a></h1>
+        <h1><a href="backend.html">Backend</a></h1>
+    </div>
+    <div id="card">
+
+    </div>
+</body>
+</html>
+
+<script>
+    var data = JSON.parse(localStorage.getItem("investordata"))
+
+    data.forEach(function(el) {
+        var div = document.createElement("div")
+
+        var img1 = document.createElement("img")
+        img1.setAttribute("src",el.img)
+
+        var name = document.createElement("h2")
+        name.innerText = el.name
+
+        var role = document.createElement("p")
+        role.innerText = el.role
+
+        var logo = document.createElement("img")
+        logo.setAttribute("src",el.logo)
+
+        div.append(img1,name,role,logo)
+
+        document.querySelector("#card").append(div)
+
+    });
+</script>
