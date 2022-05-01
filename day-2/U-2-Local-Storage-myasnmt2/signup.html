@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <style>
+        div{
+            width: 400px;
+            margin: auto;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            padding: 40px;
+            border-radius: 10px;
+        }
+        h1,h3{
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        input,#btn{
+            margin-top: 10px;
+            margin-bottom: 25px;
+            padding: 15px;
+            width: 90%;
+            font-size: 18px;
+            border-radius: 5px;
+            border: 1px solid rgb(171, 171, 171) ;
+        }
+        input::placeholder{
+            color: rgb(174, 174, 174);
+        }
+        label{
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>masai</h1>
+    <div>
+        <h3>Sign Up</h3>
+        <label for="name">Full Nmae</label><br>
+        <input type="text" id="name"m placeholder="Enrter your full name"><br>
+        <label for="email" >Email</label><br>
+        <input type="email" id="email" placeholder="Enter email"><br>
+        <label for="password">Password</label><br>
+        <input type="password" id="password" placeholder="Enter password"><br>
+        <button type="submit" id="btn">SIGN UP</button>
+    </div>
+</body>
+</html>
+
+<script>
+    document.querySelector("#btn").addEventListener("click", mydata)
+
+    function mydata(){
+        var signindata = []
+        var myobj = {
+            name: document.querySelector("#name").value,
+            email: document.querySelector("#email").value,
+            password: document.querySelector("#password").value
+        }
+        signindata.push(myobj)
+        
+        localStorage.setItem("passdata",JSON.stringify(signindata))
+        window.location.href="login.html"
+    }
+</script>
