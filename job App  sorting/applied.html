@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Database</title>
+    <link rel="stylesheet" href="commonStyles.css" />
+  </head>
+
+  <body>
+    <div id="links">
+      <div><a href="index.html">Home</a></div>
+      <div><a href="applied.html">Applied Jobs</a></div>
+      <div><a href="bookmark.html">Bookmarks</a></div>
+    </div>
+
+    <div>
+      <select name="" id="sortby_names">
+        <option value="">Sort By Names</option>
+        <option value="alphabetical">A - Z</option>
+        <option value="reverse_alphabetical">Z - A</option>
+      </select>
+      <select name="" id="sortby_salary">
+        <option value="">Sort By Salary</option>
+        <option value="high_low">High to Low</option>
+        <option value="low_high">Low to High</option>
+      </select>
+      <select name="" id="filterby_role">
+        <option value="">Filter By Role</option>
+        <option value="fsd">FSD</option>
+        <option value="frontend">FRONTEND</option>
+        <option value="backend">BACKEND</option>
+      </select>
+    </div>
+
+    <main>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Job applied</th>
+            <th>Salary expected</th>
+            <th>Add to bookmark</th>
+          </tr>
+        </thead>
+        <tbody id="body">
+          <!-- Append your output to tbody -->
+        </tbody>
+      </table>
+    </main>
+  </body>
+</html>
+
+<script>
+    //you need to code here
+    var data = JSON.parse(localStorage.getItem("jobList")) || []
+
+    var bookmarkdata = JSON.parse(localStorage.getItem("bookmarks")) || []
+
+    mydata(data)
+
+
+    function mydata(data){
+
+      document.querySelector("#body").innerHTML=null
+
+      data.forEach(function(el) {
+
+        var tr = document.createElement("tr")
+
+        var td1 = document.createElement("td")
+        td1.innerText = el.name
+        var td2 = document.createElement("td")
+        td2.innerText = el.email
+        var td3 = document.createElement("td")
+        td3.innerText = el.role
+        var td4 = document.createElement("td")
+        td4.innerText = el.salary
+        var td5 = document.createElement("td")
+        td5.innerText = "Bookmark"
+        td5.style.color = "blue"
+        td5.style.cursor = "pointer"
+        td5.addEventListener("click",function(){
+          myBookmark(el)
+        });
+
+        tr.append(td1,td2,td3,td4,td5)
+
+        document.querySelector("#body").append(tr)
+
+      })
+    }
+    function myBookmark(inp){
+      bookmarkdata.push(inp);
+      localStorage.setItem("bookmarks",JSON.stringify(bookmarkdata))
+    }
+
+    // Sorting Functions
+
+    document.querySelector("#sortby_names").addEventListener("change",function(){
+      var sortvalue = document.querySelector("#sortby_names").value 
+      if(sortvalue=="alphabetical"){
+        
+        data.sort(function (a, b) {
+          var namea=a.name.toUpperCase()
+          var nameb=b.name.toUpperCase()
+          if (namea > nameb) {
+            return 1;
+          }
+          if (namea < nameb) {
+            return -1;
+          }
+          else{
+            return 0;
+          }          
+        })
+        mydata(data)
+      }
+      if(sortvalue=="reverse_alphabetical"){
+        
+        data.sort(function (a, b) {
+          var namea=a.name.toUpperCase()
+          var nameb=b.name.toUpperCase()
+          if (namea > nameb) {
+            return -1;
+          }
+          if (namea < nameb) {
+            return 1;
+          }
+          else{
+            return 0;
+          }          
+        })
+        mydata(data)
+      }
+    })
+
+    document.querySelector("#sortby_salary").addEventListener("change",function(){
+      var sortvalue2 = document.querySelector("#sortby_salary").value
+      if(sortvalue2=="high_low"){
+        data.sort(function(a,b){
+          return b.salary-a.salary
+        })
+        mydata(data)
+      } 
+      if(sortvalue2=="low_high"){
+        data.sort(function(a,b){
+          return a.salary-b.salary
+        })
+        mydata(data)
+      } 
+    })
+
+    document.querySelector("#filterby_role").addEventListener("change",function(){
+      var sortvalue = document.querySelector("#filterby_role").value.toUpperCase()
+        var filtered = []
+        data.forEach(function(el){
+          var myrole =el.role.toUpperCase()
+          
+          if(sortvalue==myrole){
+            filtered.push(el)
+          }
+        })
+        mydata(filtered)
+    })
+</script>
